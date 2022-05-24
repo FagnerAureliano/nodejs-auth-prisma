@@ -15,12 +15,12 @@ export class AuthenticateUserCase {
     });
 
     if (userAlreadyExistis) {
-      throw new Error("User already exists!");
+      throw new Error("User already ex ists!");
     }
 
-    //Cadastrar o user
+    //Criptografa senha
     const passwordHash = await hash(password, 8);
-
+    //Cadastrar o user
     const user = await client.user.create({
       data: {
         name,
@@ -28,8 +28,7 @@ export class AuthenticateUserCase {
         password: passwordHash,
       },
     });
-    return user;
 
-    
+    return user;
   }
 }
