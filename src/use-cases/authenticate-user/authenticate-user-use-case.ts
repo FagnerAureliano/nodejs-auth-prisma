@@ -1,6 +1,7 @@
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { client } from "../../prisma/client";
+import { GenerateRefreshToken } from '../../provider/generate-refresh-token';
 
 interface IRequest {
   username: string;
@@ -27,6 +28,10 @@ export class AuthenticateUserUseCase {
       subject: userAlreadyExistis.id,
       expiresIn: "20s",
     });
-    return {token};
+
+    const generateRefreshToken = new GenerateRefreshToken()
+    const refreshToken = await generateRefreshToken.execute(userAlreadyExistis.id)
+
+    return {token, refreshToken};
   }
 }
