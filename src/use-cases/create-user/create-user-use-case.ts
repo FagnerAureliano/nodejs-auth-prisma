@@ -1,21 +1,21 @@
 import { hash } from "bcryptjs";
 import { client } from "../../prisma/client";
 
-interface IUserRequest {
+interface IUserCreate {
   name: string;
   username: string;
   password: string;
 }
 
-export class AuthenticateUserCase {
-  async execute({ name, username, password }: IUserRequest) {
+export class CreateUserUseCase {
+  async execute({ name, username, password }: IUserCreate) {
     //Verificar se o user existe
     const userAlreadyExistis = await client.user.findFirst({
       where: { username },
     });
 
     if (userAlreadyExistis) {
-      throw new Error("User already ex ists!");
+      throw new Error("User already exists!");
     }
 
     //Criptografa senha
