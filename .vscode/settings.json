@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "gestao_fin",
+            "database": "gestao_fin",
+            "username": "sisplaer",
+            "password": "sisplaer"
+        }
+    ]
+}
