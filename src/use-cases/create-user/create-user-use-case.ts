@@ -1,5 +1,5 @@
 import { hash } from "bcryptjs";
-import { client } from "../../prisma/client";
+import { prisma } from "../../prisma/client";
 
 interface IUserCreate {
   name: string;
@@ -10,7 +10,7 @@ interface IUserCreate {
 export class CreateUserUseCase {
   async execute({ name, username, password }: IUserCreate) {
     //Verificar se o user existe
-    const userAlreadyExistis = await client.user.findFirst({
+    const userAlreadyExistis = await prisma.user.findFirst({
       where: { username },
     });
 
@@ -21,7 +21,7 @@ export class CreateUserUseCase {
     //Criptografa senha
     const passwordHash = await hash(password, 8);
     //Cadastrar o user
-    const user = await client.user.create({
+    const user = await prisma.user.create({
       data: {
         name,
         username,

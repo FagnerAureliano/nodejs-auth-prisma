@@ -1,5 +1,5 @@
 import { compare } from "bcryptjs";
-import { client } from "../../prisma/client";
+import { prisma } from "../../prisma/client";
 import { GenerateRefreshToken } from "../../provider/generate-refresh-token";
 import { GenerateTokenProvider } from "../../provider/generate-token-provider";
 
@@ -10,7 +10,7 @@ interface IRequest {
 
 export class AuthenticateUserUseCase {
   async execute({ username, password }: IRequest) {
-    const userAlreadyExists = await client.user.findFirst({
+    const userAlreadyExists = await prisma.user.findFirst({
       where: {
         username,
       },
@@ -27,7 +27,7 @@ export class AuthenticateUserUseCase {
     const generateTokenProvider = new GenerateTokenProvider();
     const token = await generateTokenProvider.execute(userAlreadyExists.id);
 
-    await client.refreshToken.deleteMany({
+    await prisma.refreshToken.deleteMany({
       where: {
         userId: userAlreadyExists.id,
       },

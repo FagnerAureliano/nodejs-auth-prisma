@@ -1,11 +1,11 @@
-import { client } from "../prisma/client";
+import { prisma } from "../prisma/client";
 import dayjs from "dayjs";
 
 export class GenerateRefreshToken {
   async execute(userId: string) {
-    const expiresIn = dayjs().add(15, "second").unix();
+    const expiresIn = dayjs().add(30, "minute").unix();
 
-    const generateRefreshToken = client.refreshToken.create({
+    const generateRefreshToken = prisma.refreshToken.create({
       data: {
         userId,
         expiresIn,
